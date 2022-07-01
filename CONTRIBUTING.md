@@ -10,7 +10,7 @@ Please read this document in it's entirety before contributing.
 1. Increase the version number if this Pull Request starts a new version.
 1. You may merge the Pull Request in once you have the sign-off of two other developers, or if you 
    do not have permission to do that, you may request the second reviewer to merge it for you.
-1. Please test your changes properly before merging!
+1. Please test your changes properly before making a PR!
 
 ## Issues
 Please use the Issue forms provided with this repository to make everyone's life easier.
