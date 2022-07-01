@@ -6,8 +6,8 @@
 			"graphic":"test",
 			"color":"0xFFAAFFAA",
 			"flipX":false,
-                        "camPosX":900,
-			"camPosY":-3949200,
+                        "camPosX":0,
+			"camPosY":0,
 			"animations":
 			[
 				{"name":"singUP", "anim":"Dad Sing Note UP0", "offsetX":-6, "offsetY":50},
