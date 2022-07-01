@@ -171,6 +171,8 @@ class PlayState extends MusicBeatState
 	public static var bads:Int;
 	public static var shits:Int;
 
+	var curchar:CusChar;
+
 	#if desktop
 	// Discord RPC variables
 	var storyDifficultyText:String = "";
@@ -702,7 +704,7 @@ class PlayState extends MusicBeatState
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
 			default:
 				//custom character alert
-                                var curchar:CusChar = Modding.api.getCharShit(SONG.player2);
+				curchar = Modding.api.getCharShit(SONG.player2);
                                 camPos.x = curchar.camPosX;
 			        camPos.y = curchar.camPosY;    
 		}
@@ -1684,7 +1686,7 @@ class PlayState extends MusicBeatState
 						camFollow.x = dad.getMidpoint().x - 100;
 					default:
 				//custom character alert
-                                		var curchar:CusChar = Modding.api.getCharShit(dad.curCharacter);
+                                		
                                 		camFollow.x = curchar.camPosX;
 			        		camFollow.y = curchar.camPosY;      
 				}
