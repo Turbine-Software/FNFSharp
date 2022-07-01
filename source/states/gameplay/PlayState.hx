@@ -1,6 +1,8 @@
 package states.gameplay;
 
 import engine.io.Modding;
+import engine.base.ModAPI.CusChar;
+import engine.base.ModAPI.CharJSON;
 import sys.FileSystem;
 import states.menu.RatingState;
 import engine.functions.Option;
@@ -698,6 +700,11 @@ class PlayState extends MusicBeatState
 				dad.x -= 150;
 				dad.y += 100;
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
+			default:
+				//custom character alert
+                                var curchar:CusChar = Modding.api.getCharShit(SONG.player2);
+                                camPos.x = curchar.camPosX;
+			        camPos.y = curchar.camPosY;    
 		}
 
 		boyfriend = new Boyfriend(770, 450, SONG.player1);
@@ -1618,11 +1625,8 @@ class PlayState extends MusicBeatState
 
 		/* if (FlxG.keys.justPressed.NINE)
 			FlxG.switchState(new Charting()); */
-
-		#if debug
 		if (FlxG.keys.justPressed.EIGHT)
 			FlxG.switchState(new states.debug.AnimationDebug(SONG.player2));
-		#end
 
 		if (startingSong)
 		{
@@ -1678,6 +1682,11 @@ class PlayState extends MusicBeatState
 					case 'senpai-angry':
 						camFollow.y = dad.getMidpoint().y - 430;
 						camFollow.x = dad.getMidpoint().x - 100;
+					default:
+				//custom character alert
+                                		var curchar:CusChar = Modding.api.getCharShit(dad.curCharacter);
+                                		camFollow.x = curchar.camPosX;
+			        		camFollow.y = curchar.camPosY;      
 				}
 
 				if (dad.curCharacter == 'mom')
