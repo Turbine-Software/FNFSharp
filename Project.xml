@@ -2,7 +2,9 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin' Sharp Engine" file="Funkin" packageName="com.tpg.sharpengine" package="com.tpg.sharpengine" main="Main" version="1.4.0" company="thepercentageguy" />
+	<app title="Friday Night Funkin' Sharp Engine" file="Funkin" packageName="com.tpg.sharpengine" package="com.tpg.sharpengine" main="Main" version="1.5.0" company="thepercentageguy" />
+
+	<define name="updateSubtitle" value="Modding Polish Update" />
 
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
@@ -11,6 +13,8 @@
 
 	<!--Minimum without FLX_NO_GAMEPAD: 11.8, without FLX_NO_NATIVE_CURSOR: 11.2-->
 	<set name="SWF_VERSION" value="11.8" />
+
+	<launchImage path="assets/preload/images/newgrounds_logo.png" />
 
 	<!-- ____________________________ Window Settings ___________________________ -->
 
@@ -35,7 +39,12 @@
 	<set name="BUILD_DIR" value="export/release" unless="debug" />
 	<set name="BUILD_DIR" value="export/32bit" if="32" />
 
-	<define name="LITE" value="true" if="32" />
+	<define name="NO_MODDING" if="html5"/>
+
+	<section if="web">
+		<define name="NO_MODDING" />
+		<log warn="Modding is not supported on non-sys targets" />
+	</section>
 
 	<classpath name="source" />
 
@@ -89,8 +98,10 @@
 	<assets path="assets/week6"    library="week6"    exclude="*.ogg" if="web"/>
 	<assets path="assets/week6"    library="week6"    exclude="*.mp3" unless="web"/>
 	
-	<assets path='example_mods' rename='mods' embed='false'/>
+	<assets path='example_mods' rename='mods' embed='false' unless="NO_MODDING"/>
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />
+
+
 	<!-- <template path='mods' /> -->
 	
 	<assets path="CHANGELOG.md" rename='changelog.txt'/>

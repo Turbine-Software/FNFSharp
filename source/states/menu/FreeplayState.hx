@@ -76,6 +76,7 @@ class FreeplayState extends MusicBeatState
 		}
 
 		// mod shit
+		#if !NO_MODDING
 		for (mod in Modding.api.loaded)
 		{
 			var txtFile = File.getContent(mod.path + "/freeplay.txt").trim();
@@ -86,6 +87,7 @@ class FreeplayState extends MusicBeatState
 				songs.push(new SongMetadata(line.split(":")[0], 0, line.split(":")[1], Std.parseInt(line.split(":")[2])));
 			}
 		}
+		#end
 
 		/* 
 			if (FlxG.sound.music != null)
@@ -357,6 +359,7 @@ class FreeplayState extends MusicBeatState
 
 	function updateColor() {
 		var colorShit:Array<String> = CoolUtil.coolTextFile(Paths.txt("charcolors"));
+		#if !NO_MODDING
 		for (mod in Modding.api.loaded)
 		{
 			var shit:CharJSON = Json.parse(Modding.api.getTextShit("/chars.json", mod));
@@ -365,6 +368,7 @@ class FreeplayState extends MusicBeatState
 				colorShit.push(char.name + ":" + char.color);
 			}
 		}
+		#end
 
 		for (bruh in colorShit) {
 			if (!bruh.startsWith('#')) {

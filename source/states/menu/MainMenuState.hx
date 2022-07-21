@@ -106,7 +106,8 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, 0.06);
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, 'v${Application.current.meta.get('version')} - FNF# Engine' #if js + ' DEMO MODE' #end, 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, 'v${Application.current.meta.get('version')} (${haxe.macro.Compiler.getDefine("updateSubtitle")}) - FNF# Engine' #if js + ' DEMO MODE' #end, 12);
+		#if NO_MODDING versionShit.text += " -- MODDING API DISABLED!"; #end
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);

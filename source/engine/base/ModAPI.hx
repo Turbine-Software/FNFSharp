@@ -1,5 +1,6 @@
 package engine.base;
 
+import cpp.abi.Abi;
 import openfl.display.BitmapData;
 import flixel.graphics.frames.FlxAtlasFrames;
 import openfl.media.Sound;
@@ -25,11 +26,14 @@ class ModAPI
 
     public function new()
     {
+        #if !NO_MODDING
         loaded = new Array<Mod>();
+        #end
     }
 
     public function init(modFolderPath:String)
     {
+        #if !NO_MODDING
         for (file in FileSystem.readDirectory(modFolderPath))
         {
             trace("Inspecting file: " + modFolderPath + file);
@@ -47,10 +51,14 @@ class ModAPI
             }
         }
         trace("Found " + loaded.length + " mod(s).");
+        #else
+        loaded = [];
+        #end
     }
 
     public function initWeeks():Array<Weeks>
     {
+        #if !NO_MODDING
         var weeks:Array<Weeks> = [];
         for (mod in loaded)
         {
@@ -61,6 +69,9 @@ class ModAPI
             weeks.push(week);
         }
         return weeks;
+        #else
+        return [];
+        #end
     }
 
     /**
@@ -71,6 +82,7 @@ class ModAPI
      */
     public function getTextShit(path:String, ?mod:Mod):String
     {
+        #if !NO_MODDING
         trace("looking for text file: " + path);
         var shit = "";
         if (mod != null)
@@ -92,10 +104,14 @@ class ModAPI
             }
         }
         return shit;
+        #else
+        return "";
+        #end
     }
 
     public function getSoundShit(path:String, ?mod:Mod):Sound
     {
+        #if !NO_MODDING
         trace("looking for sound file: " + path);
         var shit:Sound = null;
         if (mod != null)
@@ -117,10 +133,14 @@ class ModAPI
             }
         }
         return shit;
+        #else
+        return null;
+        #end
     }
 
     public function getImageShit(path:String, ?mod:Mod):BitmapData
     {
+        #if !NO_MODDING
         trace("looking for image file: " + path);
         var shit:BitmapData = null;
         if (mod != null)
@@ -142,10 +162,14 @@ class ModAPI
             }
         }
         return shit;
+        #else
+        return null;
+        #end
     }
 
     public function getSparrowShit(pathPng:String, pathXml:String, ?mod:Mod):FlxAtlasFrames
     {
+        #if !NO_MODDING
         trace("looking for sparrow file: " + pathPng);
         var shit:FlxAtlasFrames = null;
         if (mod != null)
@@ -168,10 +192,14 @@ class ModAPI
             }
         }
         return shit;
+        #else
+        return null;
+        #end
     }
 
     public function getPackerShit(pathPng:String, pathXml:String, ?mod:Mod):FlxAtlasFrames
     {
+        #if !NO_MODDING
         trace("looking for sparrow file: " + pathPng);
         var shit:FlxAtlasFrames = null;
         if (mod != null)
@@ -193,10 +221,14 @@ class ModAPI
             }
         }
         return shit;
+        #else
+        return null;
+        #end
     }
 
     public function getCharShit(charName:String):CusChar
     {
+        #if !NO_MODDING
         var char:CusChar = null;
         for (mod in loaded)
         {
@@ -215,6 +247,9 @@ class ModAPI
                 break;
         }
         return char;
+        #else
+        return null;
+        #end
     }
 }
 

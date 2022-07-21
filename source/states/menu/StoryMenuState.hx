@@ -166,6 +166,7 @@ class StoryMenuState extends MusicBeatState
 		var index = weekData.length + 1;
 
 		// mod weeks
+		#if !NO_MODDING
 		for (mod in Modding.api.loaded)
 		{
 			for (weeks in Modding.weeks)
@@ -195,6 +196,7 @@ class StoryMenuState extends MusicBeatState
 
 			}
 		}
+		#end
 
 		trace(weekData);
 		trace(weekModded);
