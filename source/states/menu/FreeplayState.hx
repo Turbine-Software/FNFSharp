@@ -112,7 +112,12 @@ class FreeplayState extends MusicBeatState
 
 		// LOAD CHARACTERS
 
-		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg = new FlxSprite(0, 0);
+
+		if (Option.recieveValue("MISC_darkMode") == 1)
+			bg.loadGraphic(Paths.image('menuDesat'));
+		else
+			bg.loadGraphic(Paths.image('menuDesatDARK'));
 		add(bg);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();

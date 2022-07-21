@@ -1,5 +1,6 @@
 package states.menu;
 
+import engine.functions.Option;
 import engine.io.Paths;
 import engine.base.MusicBeatState;
 #if desktop
@@ -61,7 +62,16 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
+		var bg = new FlxSprite(-80);
+		if (Option.recieveValue("MISC_darkMode") == 1)
+		{
+			bg.loadGraphic(Paths.image('menuBG'));
+		}
+		else
+		{
+			bg.loadGraphic(Paths.image('menuDesatDARK'));
+			bg.color = 0xFFFDE871;
+		}
 		bg.scrollFactor.x = 0;
 		bg.scrollFactor.y = 0.18;
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
@@ -73,7 +83,16 @@ class MainMenuState extends MusicBeatState
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 
-		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
+		magenta = new FlxSprite(-80);
+
+		if (Option.recieveValue("MISC_darkMode") == 1)
+		{
+			magenta.loadGraphic(Paths.image('menuDesat'));
+		}
+		else
+		{
+			magenta.loadGraphic(Paths.image('menuDesatDARK'));
+		}
 		magenta.scrollFactor.x = 0;
 		magenta.scrollFactor.y = 0.18;
 		magenta.setGraphicSize(Std.int(magenta.width * 1.1));

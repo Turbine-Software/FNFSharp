@@ -1,4 +1,5 @@
 package states.menu;
+import engine.functions.Option;
 import openfl.utils.Dictionary;
 import flixel.group.FlxGroup;
 import flixel.addons.transition.FlxTransitionableState;
@@ -76,9 +77,7 @@ class OptionsMenu extends MusicBeatState
 				new CycleOption("Instadeath %v", "For those who want an actual challenge", ["Off", "On"], "FUN_instadeath")
 			]),
 			new OptionGroup("Misc", [
-				new FunctionOption("Mod Manager", "Opens the mod manager.", () -> {
-					FlxG.switchState(new ModManagerState());
-				}),
+				new CycleOption("Dark Mode %v", "When enabled, the game will use a dark theme. (WON'T BE APPLIED UNTIL STATE RESET)", ["On", "Off"], "MISC_darkMode"),
 				new FunctionOption("Reset Option", "Resets all options to their default values.", clearOptions),
 				new FunctionOption("Reset Everything", "Resets everything stored in the save file.", () -> {
 					resetBinds();
@@ -91,7 +90,11 @@ class OptionsMenu extends MusicBeatState
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 
-		var stateBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		var stateBG = new FlxSprite();
+		if (Option.recieveValue("MISC_darkMode") == 1)
+			stateBG.loadGraphic(Paths.image('menuDesat'));
+		else
+			stateBG.loadGraphic(Paths.image('menuDesatDARK'));
 		stateBG.color = 0xFFea71fd;
 		stateBG.setGraphicSize(Std.int(stateBG.width * 1.1));
 		stateBG.updateHitbox();

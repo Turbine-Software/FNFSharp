@@ -1,5 +1,6 @@
 package states.menu;
 
+import engine.functions.Option;
 import engine.io.Modding;
 import engine.functions.Song;
 import engine.util.Highscore;
@@ -119,7 +120,12 @@ class StoryMenuState extends MusicBeatState
 		rankText.screenCenter(X);
 
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
-		var yellowBG:FlxSprite = new FlxSprite(0, 56).makeGraphic(FlxG.width, 400, 0xFFF9CF51);
+
+		var yellowBG = new FlxSprite(0, 56);
+		if (Option.recieveValue("MISC_darkMode") == 1)
+			yellowBG.makeGraphic(FlxG.width, 400, 0xFFF9CF51);
+		else
+			yellowBG.makeGraphic(FlxG.width, 400, 0xFF141414);
 
 		grpWeekText = new FlxTypedGroup<MenuItem>();
 		add(grpWeekText);

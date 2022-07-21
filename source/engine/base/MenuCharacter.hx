@@ -1,5 +1,6 @@
 package engine.base;
 
+import engine.functions.Option;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 
@@ -13,8 +14,12 @@ class MenuCharacter extends FlxSprite
 
 		this.character = character;
 
+		
 		var tex = engine.io.Paths.getSparrowAtlas('campaign_menu_UI_characters');
 		frames = tex;
+
+		if (Option.recieveValue("MISC_darkMode") != 0)
+			color = 0xFF000000;
 
 		animation.addByPrefix('bf', "BF idle dance white", 24);
 		animation.addByPrefix('bfConfirm', 'BF HEY!!', 24, false);
