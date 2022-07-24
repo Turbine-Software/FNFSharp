@@ -1,5 +1,6 @@
 package game;
 
+import engine.functions.Option;
 import engine.functions.Conductor;
 import states.gameplay.PlayState;
 import engine.io.Paths;
@@ -83,6 +84,9 @@ class Note extends FlxSprite
 					animation.add('greenhold', [2]);
 					animation.add('redhold', [3]);
 					animation.add('bluehold', [1]);
+
+					if (Option.recieveValue("GAMEPLAY_downscroll") == 1)
+						flipY = true;
 				}
 
 				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
@@ -148,13 +152,14 @@ class Note extends FlxSprite
 					animation.play('purpleholdend');
 			}
 
+			
 			updateHitbox();
-
+			
 			x -= width / 2;
 
 			if (PlayState.curStage.startsWith('school'))
 				x += 30;
-
+			
 			if (prevNote.isSustainNote)
 			{
 				switch (prevNote.noteData)
@@ -166,8 +171,11 @@ class Note extends FlxSprite
 					case 2:
 						prevNote.animation.play('greenhold');
 					case 3:
-						prevNote.animation.play('redhold');
+							prevNote.animation.play('redhold');
 				}
+					
+				if (Option.recieveValue("GAMEPLAY_downscroll") == 1)
+					flipY = true;
 
 				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * PlayState.SONG.speed;
 				prevNote.updateHitbox();
