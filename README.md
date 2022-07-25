@@ -26,7 +26,7 @@ Check Credits/Shoutouts section.
 
 ### Previews
 
-(COMING SOON)
+[FNF# Gameplay Video](https://www.youtube.com/watch?v=OhZPBjN9IY8)
 
 IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMPILED VERSION, YOU MUST OPEN SOURCE YOUR MOD AS WELL
 
