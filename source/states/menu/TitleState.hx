@@ -1,5 +1,6 @@
 package states.menu;
 
+import flixel.addons.effects.chainable.FlxRainbowEffect;
 import flixel.math.FlxMath;
 import states.substates.OutdatedSubState;
 import engine.io.Paths;
@@ -179,10 +180,11 @@ class TitleState extends MusicBeatState
 		*/
 
 		logoBl = new FlxSprite(0, 0);
-		logoBl.loadGraphic(Paths.image("newLogo"));
+		logoBl.loadGraphic(Paths.image("newLogoDARK"));
 		logoBl.antialiasing = false;
 		logoBl.updateHitbox();
 		logoBl.screenCenter();
+		logoBl.color = 0xFFFF0000;
 
 		// logoBl.screenCenter();
 		// logoBl.color = FlxColor.BLACK;
@@ -277,6 +279,8 @@ class TitleState extends MusicBeatState
 
 			logoBl.angle = Math.sin(i) * 10;
 			i += 0.01;
+
+			logoBl.color = FlxColor.fromHSB(logoBl.color.hue + (1.5), 1, 0.5, 1);
 		}
 
 		if (FlxG.sound.music != null)

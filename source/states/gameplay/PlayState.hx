@@ -194,7 +194,8 @@ class PlayState extends MusicBeatState
 		camHUD.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
-		FlxG.cameras.add(camHUD);
+		if (Option.recieveValue("VISUALS_disableHUD") == 0)
+			FlxG.cameras.add(camHUD);
 
 		FlxCamera.defaultCameras = [camGame];
 
@@ -744,11 +745,11 @@ class PlayState extends MusicBeatState
 		add(dad);
 		add(boyfriend);
 
-		if (curStage == 'limo')
+		if (curStage == 'limo' && Option.recieveValue("VISUALS_week4Glow") == 0)
 		{
 			var overlayShit:FlxSprite = new FlxSprite(-500, -600).loadGraphic(Paths.image('limo/limoOverlay'));
 			overlayShit.alpha = 0.3;
-			overlayShit.blend = BlendMode.ADD;
+			overlayShit.blend = BlendMode.HARDLIGHT;
 			add(overlayShit);
 		}
 

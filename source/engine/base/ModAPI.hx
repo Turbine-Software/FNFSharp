@@ -1,5 +1,6 @@
 package engine.base;
 
+import lime.app.Application;
 import cpp.abi.Abi;
 import openfl.display.BitmapData;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -24,6 +25,12 @@ class ModAPI
      */
     public var loaded:Array<Mod>;
 
+    /**
+        Mods that don't match this version are "deprecated" but will still work.
+        @since 1.5.0
+    **/
+    public static var modVerIndex:Int = 0;
+
     public function new()
     {
         #if !NO_MODDING
@@ -39,15 +46,22 @@ class ModAPI
             trace("Inspecting file: " + modFolderPath + file);
             if (FileSystem.isDirectory(modFolderPath + file))
             {
-                trace("Found mod folder: " + file);
-                if (file.startsWith("SM."))
+                trace("found mod: " + file);
+                if (FileSystem.exists(modFolderPath + file + "/VERSION"))
                 {
-                    trace("found mod: " + file);
-                    loaded.push({
-                        name: file.split("SM.")[1],
-                        path: modFolderPath + file
-                    });
+                    if (Std.parseInt(File.getContent(modFolderPath + file + "/VERSION")) != modVerIndex)
+                    {
+                        Application.current.window.alert("Mod " + file + " has version index " + File.getContent(modFolderPath + file + "/VERSION") + " but this version of FNF# uses version index " + modVerIndex + ".\n\nThe mod will still run, but some features may not work as expected, or even crash the game. Run at your own risk.", "DEPRECATED MOD");
+                    }
                 }
+                else
+                {
+                    Application.current.window.alert("FNF# is unable to find the version index of " + file + " and therefore can't determine if the mod is compatable with the current version.\n\nThe mod will still run, but some features may not work as expected, or even crash the game. Run at your own risk.", "FNF# CANNOT DETERMINE MOD VERSION");
+                }
+                loaded.push({
+                    name: file.split("SM.")[1],
+                    path: modFolderPath + file
+                });
             }
         }
         trace("Found " + loaded.length + " mod(s).");

@@ -61,7 +61,6 @@ class OptionsMenu extends MusicBeatState
 		optionGroups = [
 			new OptionGroup("Graphics", [
 				new CycleOption("Antialiasing %v", "Decides whether edges on sprites should be smooth. Affects performance.", ["On", "Off"], "GRAPHICS_globalAA"),
-				new CycleOption("Focus Mode %v", "Only draws HUD elements when enabled.", ["Off", "On"], "GRAPHICS_liteMode"),
 			]),
 			new OptionGroup("Gameplay", [
 				//! broken! new CycleOption("Difficult Jacks %v", "With this option turned off, you only need to press once to trigger both notes.", ["On", "Off"], "GAMEPLAY_difficultJacks"),
@@ -72,11 +71,16 @@ class OptionsMenu extends MusicBeatState
 					FlxG.switchState(new KeybindState());
 				}),
 			]),
+			new OptionGroup("Visuals", [
+				new CycleOption("Dark Mode %v", "When enabled, the game will use a dark theme. (WON'T BE APPLIED UNTIL STATE RESET)", ["On", "Off"], "VISUALS_darkMode"),
+				new CycleOption("Week 4 Glow %v", "When enabled, there will be a small glow on week 4.", ["On", "Off"], "VISUALS_week4Glow"),
+				new CycleOption("Disable HUD %v", "Why would you want to do this?", ["Off", "On"], "VISUALS_disableHUD"),
+				new CycleOption("Focus Mode %v", "Only draws HUD elements when enabled.", ["Off", "On"], "GRAPHICS_liteMode"),
+			]),
 			new OptionGroup("Fun", [
 				new CycleOption("Instadeath %v", "For those who want an actual challenge", ["Off", "On"], "FUN_instadeath")
 			]),
 			new OptionGroup("Misc", [
-				new CycleOption("Dark Mode %v", "When enabled, the game will use a dark theme. (WON'T BE APPLIED UNTIL STATE RESET)", ["On", "Off"], "MISC_darkMode"),
 				new FunctionOption("Reset Option", "Resets all options to their default values.", clearOptions),
 				new FunctionOption("Reset Everything", "Resets everything stored in the save file.", () -> {
 					resetBinds();
@@ -90,7 +94,7 @@ class OptionsMenu extends MusicBeatState
 		transOut = FlxTransitionableState.defaultTransOut;
 
 		var stateBG = new FlxSprite();
-		if (Option.recieveValue("MISC_darkMode") == 1)
+		if (Option.recieveValue("VISUALS_darkMode") == 1)
 			stateBG.loadGraphic(Paths.image('menuDesat'));
 		else
 			stateBG.loadGraphic(Paths.image('menuDesatDARK'));

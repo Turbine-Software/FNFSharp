@@ -3,6 +3,7 @@
 
 package states.menu;
 
+import engine.functions.Option;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.input.keyboard.FlxKeyboard.FlxKeyInput;
 import flixel.addons.transition.FlxTransitionableState;
@@ -39,6 +40,11 @@ class KeybindState extends engine.base.MusicBeatState {
 		transOut = FlxTransitionableState.defaultTransOut;
 
 		var background = new FlxSprite(0, 0, Paths.image('menuBGBlue'));
+		if (Option.recieveValue("VISUALS_darkMode") == 0)
+		{
+			background.loadGraphic(Paths.image("menuDesatDARK"));
+			background.color = 0xFF9271FD;
+		}
 		background.updateHitbox();
 		background.screenCenter();
 		background.antialiasing = true;

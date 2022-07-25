@@ -63,7 +63,7 @@ class MainMenuState extends MusicBeatState
 		persistentUpdate = persistentDraw = true;
 
 		var bg = new FlxSprite(-80);
-		if (Option.recieveValue("MISC_darkMode") == 1)
+		if (Option.recieveValue("VISUALS_darkMode") == 1)
 		{
 			bg.loadGraphic(Paths.image('menuBG'));
 		}
@@ -85,7 +85,7 @@ class MainMenuState extends MusicBeatState
 
 		magenta = new FlxSprite(-80);
 
-		if (Option.recieveValue("MISC_darkMode") == 1)
+		if (Option.recieveValue("VISUALS_darkMode") == 1)
 		{
 			magenta.loadGraphic(Paths.image('menuDesat'));
 		}

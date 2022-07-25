@@ -24,6 +24,11 @@ class GamemodeState extends FlxState
 
         var bg = new FlxSprite(0, 0);
         bg.loadGraphic(Paths.image("menuBGBlue"));
+        if (Option.recieveValue("VISUALS_darkMode") == 0)
+        {
+            bg.loadGraphic(Paths.image("menuDesatDARK"));
+            bg.color = 0xFF9271FD;
+        }
         add(bg);
 
         textBoi = new FlxText(0, 0, FlxG.width, "Gamemodes");
