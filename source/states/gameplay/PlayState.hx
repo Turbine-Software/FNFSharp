@@ -1,5 +1,6 @@
 package states.gameplay;
 
+import engine.assets.BlendModeEffect;
 import engine.io.Modding;
 import sys.FileSystem;
 import states.menu.RatingState;
@@ -379,25 +380,21 @@ class PlayState extends MusicBeatState
 		                          dancer.scrollFactor.set(0.4, 0.4);
 		                          grpLimoDancers.add(dancer);
 		                  }
-
-		                  var overlayShit:FlxSprite = new FlxSprite(-500, -600).loadGraphic(Paths.image('limo/limoOverlay'));
-		                  overlayShit.alpha = 0.5;
-		                  // add(overlayShit);
-
-		                  // var shaderBullshit = new BlendModeEffect(new OverlayShader(), FlxColor.RED);
+						  
+		                  // var shaderBullshit = new BlendModeEffect(new engine.assets.OverlayShader(), FlxColor.RED);
 
 		                  // FlxG.camera.setFilters([new ShaderFilter(cast shaderBullshit.shader)]);
 
 		                  // overlayShit.shader = shaderBullshit;
-
+						  
 		                  var limoTex = Paths.getSparrowAtlas('limo/limoDrive');
-
+						  
 		                  limo = new FlxSprite(-120, 550);
 		                  limo.frames = limoTex;
 		                  limo.animation.addByPrefix('drive', "Limo stage", 24);
 		                  limo.animation.play('drive');
 		                  limo.antialiasing = false;
-
+						  
 		                  fastCar = new FlxSprite(-300, 160).loadGraphic(Paths.image('limo/fastCarLol'));
 		                  // add(limo);
 		          }
@@ -746,6 +743,14 @@ class PlayState extends MusicBeatState
 
 		add(dad);
 		add(boyfriend);
+
+		if (curStage == 'limo')
+		{
+			var overlayShit:FlxSprite = new FlxSprite(-500, -600).loadGraphic(Paths.image('limo/limoOverlay'));
+			overlayShit.alpha = 0.3;
+			overlayShit.blend = BlendMode.ADD;
+			add(overlayShit);
+		}
 
 		var doof:DialogueBox = new DialogueBox(false, dialogue);
 		// doof.x += 70;
