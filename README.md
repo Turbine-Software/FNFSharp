@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/thepercentageguy/FNFSharp/master/assets/preload/images/newLogo.png" height="200" />
+<img src="https://raw.githubusercontent.com/thepercentageguy/FNFSharp/master/assets/preload/images/newLogoDARK.png" height="200" />
 
 ---
 
@@ -14,7 +14,7 @@ No, I won't change it.
 
 ### What's FNF♯?
 
-FNF♯ is the spiritual successor to UFNF and NUFNF however if you prefer NUFNF i recommend checking out Sublime Engine by @SpunBlue which runs on the NUFNF codebase.
+FNF# is a friday night funkin engine that acts as a spiritual successor to UFNF and NUFNF designed to be easy to mod and really customisable. If you prefer NUFNF i recommend checking out Sublime Engine by @SpunBlue which runs on the NUFNF codebase.
 
 ### What makes it better than (N)UFNF?
 
