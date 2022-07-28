@@ -128,6 +128,7 @@ class TitleState extends MusicBeatState
 	}
 
 	var logoBl:FlxSprite;
+	var bg:FlxSprite;
 	var gfDance:FlxSprite;
 	var danceLeft:Bool = false;
 	var titleText:FlxSprite;
@@ -164,10 +165,11 @@ class TitleState extends MusicBeatState
 
 		persistentUpdate = true;
 
-		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-		// bg.antialiasing = false;
-		// bg.setGraphicSize(Std.int(bg.width * 0.6));
-		// bg.updateHitbox();
+		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		bg.loadGraphic(Paths.image("titleBG"));
+		bg.setGraphicSize(1280, 720);
+		bg.updateHitbox();
+		bg.color = 0xFFFF0000;
 		add(bg);
 
 		/*
@@ -281,6 +283,7 @@ class TitleState extends MusicBeatState
 			i += 0.01;
 
 			logoBl.color = FlxColor.fromHSB(logoBl.color.hue + (1.5), 1, 0.5, 1);
+			bg.color = FlxColor.fromHSB(bg.color.hue + (1.5), 1, 0.5, 1);
 		}
 
 		if (FlxG.sound.music != null)

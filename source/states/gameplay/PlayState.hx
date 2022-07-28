@@ -1,5 +1,9 @@
 package states.gameplay;
 
+import engine.assets.OverlayShader;
+import shaders.ColorInvert.ColorInvertShader;
+import openfl.display.ShaderParameter;
+import shaders.Wavyboi.WavyboiShader;
 import engine.assets.BlendModeEffect;
 import engine.io.Modding;
 import sys.FileSystem;
@@ -134,6 +138,7 @@ class PlayState extends MusicBeatState
 	var limo:FlxSprite;
 	var grpLimoDancers:FlxTypedGroup<BackgroundDancer>;
 	var fastCar:FlxSprite;
+	var overlayShit:FlxSprite;
 
 	var upperBoppers:FlxSprite;
 	var bottomBoppers:FlxSprite;
@@ -198,6 +203,14 @@ class PlayState extends MusicBeatState
 			FlxG.cameras.add(camHUD);
 
 		FlxCamera.defaultCameras = [camGame];
+
+		if (Option.recieveValue("FUN_cameraShader") == 1)
+		{
+			var shader:ColorInvertShader = new ColorInvertShader();
+			var filter = new ShaderFilter(shader);
+			camHUD.setFilters([filter]);
+			camGame.setFilters([filter]);
+		}
 
 		persistentUpdate = true;
 		persistentDraw = true;
@@ -382,11 +395,18 @@ class PlayState extends MusicBeatState
 		                          grpLimoDancers.add(dancer);
 		                  }
 						  
-		                  // var shaderBullshit = new BlendModeEffect(new engine.assets.OverlayShader(), FlxColor.RED);
-
-		                  // FlxG.camera.setFilters([new ShaderFilter(cast shaderBullshit.shader)]);
-
-		                  // overlayShit.shader = shaderBullshit;
+						  
+						  
+		                if (curStage == 'limo' && Option.recieveValue("VISUALS_week4Glow") == 0)
+						{
+							// var shader = new OverlayShader();
+							// var shaderBullshit = new BlendModeEffect(shader, 0xAAFF6060);
+							// FlxG.camera.setFilters([new ShaderFilter(cast shaderBullshit.shader)]);
+							overlayShit = new FlxSprite(-500, -600).loadGraphic(Paths.image('limo/limoOverlay'));
+							// overlayShit.shader = shader;
+							overlayShit.alpha = 0.3;
+							overlayShit.blend = BlendMode.HARDLIGHT;
+						}
 						  
 		                  var limoTex = Paths.getSparrowAtlas('limo/limoDrive');
 						  
@@ -740,16 +760,17 @@ class PlayState extends MusicBeatState
 
 		// Shitty layering but whatev it works LOL
 		if (curStage == 'limo')
+		{
 			add(limo);
+		}
+
+
 
 		add(dad);
 		add(boyfriend);
 
-		if (curStage == 'limo' && Option.recieveValue("VISUALS_week4Glow") == 0)
+		if (Option.recieveValue("VISUALS_week4Glow") == 0 && curStage == "limo")
 		{
-			var overlayShit:FlxSprite = new FlxSprite(-500, -600).loadGraphic(Paths.image('limo/limoOverlay'));
-			overlayShit.alpha = 0.3;
-			overlayShit.blend = BlendMode.HARDLIGHT;
 			add(overlayShit);
 		}
 
@@ -1753,6 +1774,14 @@ class PlayState extends MusicBeatState
 			if (unspawnNotes[0].strumTime - Conductor.songPosition < 1500)
 			{
 				var dunceNote:Note = unspawnNotes[0];
+				if (Option.recieveValue("FUN_hudShader") == 1)
+				{
+					var shader = new WavyboiShader();
+					shader.alpha.value = [1.0];
+					shader.colorMultiplier.value = [1.0];
+					shader.colorOffset.value = [0.0];
+					dunceNote.shader = shader;
+				}
 				notes.add(dunceNote);
 
 				var index:Int = unspawnNotes.indexOf(dunceNote);

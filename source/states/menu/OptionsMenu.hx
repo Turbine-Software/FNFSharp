@@ -63,7 +63,6 @@ class OptionsMenu extends MusicBeatState
 				new CycleOption("Antialiasing %v", "Decides whether edges on sprites should be smooth. Affects performance.", ["On", "Off"], "GRAPHICS_globalAA"),
 			]),
 			new OptionGroup("Gameplay", [
-				//! broken! new CycleOption("Difficult Jacks %v", "With this option turned off, you only need to press once to trigger both notes.", ["On", "Off"], "GAMEPLAY_difficultJacks"),
 				new CycleOption("Ghost Tapping %v", "When enabled, you will not get a miss for pressing a key without a note.", ["On", "Off"], "GAMEPLAY_ghostTapping"),
 				new CycleOption("Botplay %v", "Whether the game plays itself or not", ["Off", "On"], "GAMEPLAY_botplay"),
 				new CycleOption("Downscroll %v", "Downscroll.", ["Off", "On"], "GAMEPLAY_downscroll"),
@@ -78,7 +77,9 @@ class OptionsMenu extends MusicBeatState
 				new CycleOption("Focus Mode %v", "Only draws HUD elements when enabled.", ["Off", "On"], "GRAPHICS_liteMode"),
 			]),
 			new OptionGroup("Fun", [
-				new CycleOption("Instadeath %v", "For those who want an actual challenge", ["Off", "On"], "FUN_instadeath")
+				new CycleOption("Instadeath %v", "For those who want an actual challenge", ["Off", "On"], "FUN_instadeath"),
+				new CycleOption("Arrow Shader %v", "Change shader used on HUD", ["Off", "Wave"], "FUN_hudShader"),
+				new CycleOption("Camera Shader %v", "Change shader used on camera", ["Off", "Invert"], "FUN_cameraShader"),
 			]),
 			new OptionGroup("Misc", [
 				new FunctionOption("Reset Option", "Resets all options to their default values.", clearOptions),
