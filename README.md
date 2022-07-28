@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/thepercentageguy/FNFSharp/master/assets/preload/images/newLogo.png" height="200" />
+<img src="https://raw.githubusercontent.com/thepercentageguy/FNFSharp/master/assets/preload/images/newLogoDARK.png" height="200" />
 
 ---
 
