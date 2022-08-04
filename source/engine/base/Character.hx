@@ -36,6 +36,23 @@ class Character extends FlxSprite
 
 		switch (curCharacter)
 		{
+			case 'taco': // very important character
+				tex = Modding.getSparrow("taco", null, Modding.findModOfName(PlayState.mod));
+				frames = tex;
+				animation.addByPrefix('idle', 'Idle', 24);
+				animation.addByPrefix('singUP', 'Up', 24);
+				animation.addByPrefix('singRIGHT', 'Right', 24);
+				animation.addByPrefix('singDOWN', 'Down', 24);
+				animation.addByPrefix('singLEFT', 'Left', 24);
+
+				addOffset('idle');
+				addOffset("singUP");
+				addOffset("singRIGHT");
+				addOffset("singLEFT");
+				addOffset("singDOWN");
+
+				playAnim('idle');
+
 			case 'gf':
 				// GIRLFRIEND CODE
 				tex = Modding.getSparrow("GF_assets", Modding.findModOfName(PlayState.mod));
