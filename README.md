@@ -9,6 +9,7 @@ Yes, the name is a music joke and a programming joke at the same time.
 No, I won't change it.
 
 [DISCORD SERVER](https://discord.gg/x6pvf3WPyW)
+[GUILDED](https://www.guilded.gg/i/E9meGAJE)
 
 ## The actually important shits
 
