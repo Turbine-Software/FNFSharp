@@ -188,6 +188,8 @@ class PlayState extends MusicBeatState
 
 	var botplay:Bool = Option.recieveValue("GAMEPLAY_botplay") == 1;
 
+	public var publicStageObjs:FlxTypedGroup<FlxSprite>;
+
 	override public function create()
 	{
 		if (FlxG.sound.music != null)
@@ -1179,11 +1181,11 @@ class PlayState extends MusicBeatState
 		curSong = songData.song;
 
 		// preloading :OOO
-		FlxG.sound.music.loadEmbedded(Modding.getInst(SONG.song, Modding.findModOfName(mod)));
+		FlxG.sound.music.loadEmbedded(Modding.inst(mod + ":" + SONG.song));
 
 		if (SONG.needsVoices)
 		{
-			vocals = new FlxSound().loadEmbedded(Modding.getVoices(SONG.song, Modding.findModOfName(mod)));
+			vocals = new FlxSound().loadEmbedded(Modding.voices(mod + ":" + SONG.song));
 			
 			/*
 			if (FileSystem.exists(Paths.voices(PlayState.SONG.song)))
@@ -1989,7 +1991,7 @@ class PlayState extends MusicBeatState
 				prevCamFollow = camFollow;
 
 				// TODO: ADD THIS
-				SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty, PlayState.storyPlaylist[0], mod != "" ? Modding.findModOfName(mod) : null);
+				SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty, PlayState.storyPlaylist[0], mod);
 				FlxG.sound.music.stop();
 
 				startFrom = 0;

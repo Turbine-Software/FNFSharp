@@ -87,6 +87,9 @@ class OptionsMenu extends MusicBeatState
 					resetBinds();
 					FlxG.save.erase();
 				}),
+				new FunctionOption("Mods", "Opens Modlist.", () -> {
+					FlxG.switchState(new ModMenu());
+				}),
 				// new CycleOption("Enable experimental charter %v", "Enable new charter", ["Off", "On"], "MISC_newCharter")
 			]),
 		];

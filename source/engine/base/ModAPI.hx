@@ -47,24 +47,47 @@ class ModAPI
             if (FileSystem.isDirectory(modFolderPath + file))
             {
                 trace("found mod: " + file);
-                if (FileSystem.exists(modFolderPath + file + "/VERSION"))
+                if (!FileSystem.exists(modFolderPath + file + "/mod.json"))
                 {
-                    if (Std.parseInt(File.getContent(modFolderPath + file + "/VERSION")) != modVerIndex)
-                    {
-                        Application.current.window.alert("Mod " + file + " has version index " + File.getContent(modFolderPath + file + "/VERSION") + " but this version of FNF# uses version index " + modVerIndex + ".\n\nThe mod will still run, but some features may not work as expected, or even crash the game. Run at your own risk.", "DEPRECATED MOD");
-                    }
+                    Application.current.window.alert("Mod " + file + " is missing mod.json", "Mod Error");
+                    continue;
                 }
-                else
+                var meta:ModMeta = Json.parse(File.getContent(modFolderPath + file + "/mod.json"));
+                if (meta.versionIndex != modVerIndex)
                 {
-                    Application.current.window.alert("FNF# is unable to find the version index of " + file + " and therefore can't determine if the mod is compatable with the current version.\n\nThe mod will still run, but some features may not work as expected, or even crash the game. Run at your own risk.", "FNF# CANNOT DETERMINE MOD VERSION");
+                    Application.current.window.alert("Mod " + file + " has version index " + meta.versionIndex + " but this version of FNF# uses version index " + modVerIndex + ".\n\nThe mod will still run, but some features may not work as expected, or even crash the game. Run at your own risk.", "DEPRECATED MOD");
                 }
                 loaded.push({
                     name: file.split("SM.")[1],
+                    meta: meta,
                     path: modFolderPath + file
                 });
             }
         }
         trace("Found " + loaded.length + " mod(s).");
+        trace("Inspecting dependencies...");
+        for (mod in loaded)
+        {
+            for (dependency in mod.meta.dependencies)
+            {
+                trace("Looking for dependency: " + dependency);
+                var found:Bool = false;
+                for (loadedMod in loaded)
+                {
+                    if (loadedMod.meta.modID == dependency.modID && loadedMod.meta.versionIndex == dependency.versionIndex)
+                    {
+                        trace("Found dependency: " + dependency.modID + ":" + dependency.versionIndex);
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    Application.current.window.alert("Mod with ID \"" + mod.meta.modID + "\" depends on mod with ID \"" + dependency.modID + ":" + dependency.versionIndex + "\" which is not loaded.\nUnloading mod...", "Mod Error");
+                    loaded.remove(mod);
+                }
+            }
+        }
         #else
         loaded = [];
         #end
@@ -88,153 +111,131 @@ class ModAPI
         #end
     }
 
-    /**
-     * Gets a text file from a mod.
-     * @param path the path to the file
-     * @param mod the mod to get it from. if `null`, it will loop over all mods and get the first occurance of the file.
-     * @return String
-     */
-    public function getTextShit(path:String, ?mod:Mod):String
+    public function image(key:String, modID:String):BitmapData
     {
         #if !NO_MODDING
-        trace("looking for text file: " + path);
-        var shit = "";
-        if (mod != null)
+        for (mod in loaded)
         {
-            trace("getting the path: " + mod.path + path);
-            shit = File.getContent(mod.path + path);
-        }
-        else 
-        {
-            for (mod in loaded)
+            if (mod.meta.modID == modID)
             {
-                trace("scanning mod: " + mod.name);
-                if (FileSystem.exists(mod.path + path))
-                {
-                    trace("getting the path: " + mod.path + path);
-                    shit = File.getContent(mod.path + path);
-                    break;
-                }
+                return BitmapData.fromFile(mod.path + "/images/" + key + ".png");
             }
         }
-        return shit;
-        #else
-        return "";
-        #end
-    }
-
-    public function getSoundShit(path:String, ?mod:Mod):Sound
-    {
-        #if !NO_MODDING
-        trace("looking for sound file: " + path);
-        var shit:Sound = null;
-        if (mod != null)
-        {
-            trace("getting the path: " + mod.path + path);
-            shit = Sound.fromFile(mod.path + path);
-        }
-        else 
-        {
-            for (mod in loaded)
-            {
-                trace("scanning mod: " + mod.name);
-                if (FileSystem.exists(mod.path + path))
-                {
-                    trace("getting the path: " + mod.path + path);
-                    shit = Sound.fromFile(mod.path + path);
-                    break;
-                }
-            }
-        }
-        return shit;
+        return null;
         #else
         return null;
         #end
     }
 
-    public function getImageShit(path:String, ?mod:Mod):BitmapData
+    public function inst(key:String, modID:String):Sound
     {
         #if !NO_MODDING
-        trace("looking for image file: " + path);
-        var shit:BitmapData = null;
-        if (mod != null)
+        for (mod in loaded)
         {
-            trace("getting the path: " + mod.path + path);
-            shit = BitmapData.fromFile(mod.path + path);
-        }
-        else
-        {
-            for (mod in loaded)
+            if (mod.meta.modID == modID)
             {
-                trace("scanning mod: " + mod.name);
-                if (FileSystem.exists(mod.path + path))
-                {
-                    trace("getting the path: " + mod.path + path);
-                    shit = BitmapData.fromFile(mod.path + path);
-                    break;
-                }
+                return Sound.fromFile(mod.path + "/songs/" + key + "/Inst.ogg");
             }
         }
-        return shit;
+        return null;
         #else
         return null;
         #end
     }
 
-    public function getSparrowShit(pathPng:String, pathXml:String, ?mod:Mod):FlxAtlasFrames
+    public function voices(key:String, modID:String):Sound
     {
         #if !NO_MODDING
-        trace("looking for sparrow file: " + pathPng);
-        var shit:FlxAtlasFrames = null;
-        if (mod != null)
+        for (mod in loaded)
         {
-            trace("getting the path: " + pathPng);
-            shit = FlxAtlasFrames.fromSparrow(getImageShit(pathPng, mod), getTextShit(pathXml, mod));
-        }
-        else 
-        {
-            for (mod in loaded)
+            if (mod.meta.modID == modID)
             {
-                trace("scanning mod: " + mod.name);
-                trace("looking for image file: " + mod.path + pathPng);
-                if (FileSystem.exists(mod.path + pathPng))
-                {
-                    trace("getting the path: " +  pathPng);
-                    shit = FlxAtlasFrames.fromSparrow(getImageShit(pathPng, mod), getTextShit(pathXml, mod));
-                    break;
-                }
+                return Sound.fromFile(mod.path + "/songs/" + key + "/Voices.ogg");
             }
         }
-        return shit;
+        return null;
         #else
         return null;
         #end
     }
 
-    public function getPackerShit(pathPng:String, pathXml:String, ?mod:Mod):FlxAtlasFrames
+    public function json(key:String, modID:String):String
     {
         #if !NO_MODDING
-        trace("looking for sparrow file: " + pathPng);
-        var shit:FlxAtlasFrames = null;
-        if (mod != null)
+        for (mod in loaded)
         {
-            trace("getting the path: " + pathPng);
-            shit = FlxAtlasFrames.fromSpriteSheetPacker(getImageShit(pathPng, mod), getTextShit(pathXml, mod));
-        }
-        else 
-        {
-            for (mod in loaded)
+            if (mod.meta.modID == modID)
             {
-                trace("scanning mod: " + mod.name);
-                if (FileSystem.exists(pathPng))
-                {
-                    trace("getting the path: " +  pathPng);
-                    shit = FlxAtlasFrames.fromSpriteSheetPacker(getImageShit(pathPng, mod), getTextShit(pathXml, mod));
-                    break;
-                }
+                trace(mod.path + "/" + key + ".json");
+                return File.getContent(mod.path + "/" + key + ".json");
             }
         }
-        return shit;
+        return null;
+        #else
+        return null;
+        #end
+    }
+
+    public function txt(key:String, modID:String):String
+    {
+        #if !NO_MODDING
+        for (mod in loaded)
+        {
+            if (mod.meta.modID == modID)
+            {
+                return File.getContent(mod.path + "/" + key + ".txt");
+            }
+        }
+        return null;
+        #else
+        return null;
+        #end
+    }
+
+    public function noExtTxt(key:String, modID:String):String
+    {
+        #if !NO_MODDING
+        for (mod in loaded)
+        {
+            if (mod.meta.modID == modID)
+            {
+                return File.getContent(mod.path + "/" + key);
+            }
+        }
+        return null;
+        #else
+        return null;
+        #end
+    }
+
+    public function sparrow(key:String, modID:String):FlxAtlasFrames
+    {
+        #if !NO_MODDING
+        for (mod in loaded)
+        {
+            if (mod.meta.modID == modID)
+            {
+                trace("DINGUS " + key + ", " + modID);
+                return FlxAtlasFrames.fromSparrow(image(key, modID), noExtTxt("images/" + key + ".xml", modID));
+            }
+        }
+        return null;
+        #else
+        return null;
+        #end
+    }
+
+    public function packer(key:String, modID:String):FlxAtlasFrames
+    {
+        #if !NO_MODDING
+        for (mod in loaded)
+        {
+            if (mod.meta.modID == modID)
+            {
+                return FlxAtlasFrames.fromSpriteSheetPacker(image(key, modID), noExtTxt("images/" + key + ".xml", modID));
+            }
+        }
+        return null;
         #else
         return null;
         #end
@@ -246,8 +247,8 @@ class ModAPI
         var char:CusChar = null;
         for (mod in loaded)
         {
-            var rawJson = File.getContent(mod.path + "/chars.json");
-            trace("Parsing chars.json for mod: " + mod.name);
+            var rawJson = File.getContent(mod.path + "chars.json");
+            trace("Parsing chars.json for mod: " + mod.meta.modID);
             var thing:CharJSON = Json.parse(rawJson);
             for (charT in thing.chars)
             {
@@ -270,7 +271,22 @@ class ModAPI
 typedef Mod = 
 {
     name:String,
+    meta:ModMeta,
     path:String,
+}
+
+typedef ModMeta = {
+    modID:String,
+    displayName:String,
+    author:String,
+    credits:Array<String>,
+    versionIndex:Int,
+    dependencies:Array<ModDependency>
+}
+
+typedef ModDependency = {
+    modID:String,
+    versionIndex:Int,
 }
 
 typedef Weeks =

@@ -3,7 +3,7 @@
 	[
 		{
 			"name":"test",
-			"graphic":"test",
+			"graphic":"tpgTestSong:test",
 			"color":"0xFFAAFFAA",
 			"flipX":false,
 			"animations":

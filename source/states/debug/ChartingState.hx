@@ -126,7 +126,9 @@ class ChartingState extends MusicBeatState
 		curRenderedSustains = new FlxTypedGroup<FlxSprite>();
 
 		if (PlayState.SONG != null)
+		{
 			_song = PlayState.SONG;
+		}
 		else
 		{
 			_song = {
@@ -269,7 +271,7 @@ class ChartingState extends MusicBeatState
 		chars = CoolUtil.coolTextFile(Paths.txt('characterList'));
 		for (mod in Modding.api.loaded)
 		{
-			var shit:CharJSON = Json.parse(Modding.api.getTextShit("/chars.json", mod));
+			var shit:CharJSON = Json.parse(Modding.api.txt("/chars.json", mod.meta.modID));
 			for (char in shit.chars)
 			{
 				chars.push(char.name);
@@ -485,10 +487,10 @@ class ChartingState extends MusicBeatState
 			// vocals.stop();
 		}
 
-		FlxG.sound.playMusic(Modding.getInst(daSong), 0.6);
+		FlxG.sound.playMusic(Modding.inst(PlayState.mod + ":" + daSong), 0.6);
 
 		// WONT WORK FOR TUTORIAL OR TEST SONG!!! REDO LATER
-		vocals = new FlxSound().loadEmbedded(Modding.getVoices(daSong));
+		vocals = new FlxSound().loadEmbedded(Modding.voices(PlayState.mod + ":" + daSong));
 		FlxG.sound.list.add(vocals);
 
 		FlxG.sound.music.pause();

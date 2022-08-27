@@ -1,5 +1,6 @@
 package;
 
+import haxe.Exception;
 import sys.io.File;
 import sys.FileSystem;
 import lime.app.Application;
@@ -22,6 +23,8 @@ class Main extends Sprite
 	var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
 	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
 
+	var useLog:Bool = true;
+
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
 	public static function main():Void
@@ -33,8 +36,15 @@ class Main extends Sprite
 	{
 		super();
 
-		if (FileSystem.exists("./log.txt"))
-			FileSystem.deleteFile("./log.txt");
+		try {
+			if (FileSystem.exists("./log.txt"))
+				FileSystem.deleteFile("./log.txt");
+		}
+		catch (e:Exception)
+		{
+			Application.current.window.alert("Error deleting log file: " + e.message);
+			useLog = false;
+		}
 		
 		if (stage != null)
 		{
@@ -65,14 +75,24 @@ class Main extends Sprite
 			
 			var finalStr = '(${date.getUTCHours()}:${date.getUTCMinutes()}:${date.getUTCSeconds()})[${infos.className} -> ${infos.methodName} at ${infos.lineNumber}]: $v';
 			Sys.println(finalStr);
-			if (!FileSystem.exists("./log.txt"))
+			if (!FileSystem.exists("./log.txt") && useLog)
 			{
-				File.saveContent('./log.txt', 'LOG FILE\n${date.getUTCDate()}.${date.getUTCMonth()}.${date.getUTCFullYear()} at ${date.getUTCHours()}:${date.getUTCMinutes()}:${date.getUTCSeconds()} (All times are kept in UTC)\n');
+				try {
+					File.saveContent('./log.txt', 'LOG FILE\n${date.getUTCDate()}.${date.getUTCMonth()}.${date.getUTCFullYear()} at ${date.getUTCHours()}:${date.getUTCMinutes()}:${date.getUTCSeconds()} (All times are kept in UTC)\n');
+				}
+				catch (e:Exception)
+				{
+					Application.current.window.alert('Log file could not be created.\n\n${e.message}');
+					useLog = false;
+				}
 			}
 
-			var fHandle = File.append("./log.txt");
-			fHandle.writeString(finalStr + '\n');
-			fHandle.close();
+			if (useLog)
+			{
+				var fHandle = File.append("./log.txt");
+				fHandle.writeString(finalStr + '\n');
+				fHandle.close();
+			}
 		}
 	}
 

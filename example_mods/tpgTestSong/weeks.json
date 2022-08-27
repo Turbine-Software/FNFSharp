@@ -3,7 +3,7 @@
     [
         {
             "name": "Test",
-            "graphic":"TestWeek",
+            "graphic":"tpgTestSong:TestWeek",
             "libInclude":["week6"],
             "songs":
             [

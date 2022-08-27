@@ -1,0 +1,11 @@
+{
+    "modID":"tpgTestSong",
+    "displayName":"Test Song",
+    "author":"thepercentageguy",
+    "credits":[""],
+    "versionIndex":0,
+
+    "dependencies": [
+        
+    ]
+}

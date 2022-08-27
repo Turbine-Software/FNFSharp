@@ -38,7 +38,7 @@ class Character extends FlxSprite
 		{
 			case 'gf':
 				// GIRLFRIEND CODE
-				tex = Modding.getSparrow("GF_assets", Modding.findModOfName(PlayState.mod));
+				tex = Modding.sparrow("shared:GF_assets");
 				frames = tex;
 				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
 				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
@@ -69,7 +69,7 @@ class Character extends FlxSprite
 				playAnim('danceRight');
 
 			case 'gf-christmas':
-				tex = Modding.getSparrow("christmas/gfChristmas", ["week5"], Modding.findModOfName(PlayState.mod));
+				tex = Modding.sparrow("LIB_week5:christmas/gfChristmas");
 				frames = tex;
 				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
 				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
@@ -100,7 +100,7 @@ class Character extends FlxSprite
 				playAnim('danceRight');
 
 			case 'gf-car':
-				tex = Modding.getSparrow("gfCar", ["week4"], Modding.findModOfName(PlayState.mod));
+				tex = Modding.sparrow("LIB_week4:gfCar");
 				frames = tex;
 				animation.addByIndices('singUP', 'GF Dancing Beat Hair blowing CAR', [0], "", 24, false);
 				animation.addByIndices('danceLeft', 'GF Dancing Beat Hair blowing CAR', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
@@ -113,7 +113,7 @@ class Character extends FlxSprite
 				playAnim('danceRight');
 
 			case 'gf-pixel':
-				tex = Modding.getSparrow("weeb/gfPixel", ["week6"], Modding.findModOfName(PlayState.mod));
+				tex = Modding.sparrow("LIB_week6:weeb/gfPixel");
 				frames = tex;
 				animation.addByIndices('singUP', 'GF IDLE', [2], "", 24, false);
 				animation.addByIndices('danceLeft', 'GF IDLE', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
@@ -130,7 +130,7 @@ class Character extends FlxSprite
 
 			case 'dad':
 				// DAD ANIMATION LOADING CODE
-				tex = Modding.getSparrow("DADDY_DEAREST", null, Modding.findModOfName(PlayState.mod));
+				tex = Modding.sparrow("shared:DADDY_DEAREST");
 				frames = tex;
 				animation.addByPrefix('idle', 'Dad idle dance', 24);
 				animation.addByPrefix('singUP', 'Dad Sing Note UP', 24);
@@ -146,7 +146,7 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 			case 'spooky':
-				tex = Modding.getSparrow("spooky_kids_assets", ["week2"], Modding.findModOfName(PlayState.mod));
+				tex = Modding.sparrow("LIB_week2:spooky_kids_assets");
 				frames = tex;
 				animation.addByPrefix('singUP', 'spooky UP NOTE', 24, false);
 				animation.addByPrefix('singDOWN', 'spooky DOWN note', 24, false);
@@ -165,7 +165,7 @@ class Character extends FlxSprite
 
 				playAnim('danceRight');
 			case 'mom':
-				tex = Modding.getSparrow("Mom_Assets", ["week4"], Modding.findModOfName(PlayState.mod));
+				tex = Modding.sparrow("LIB_week4:Mom_Assets");
 				frames = tex;
 
 				animation.addByPrefix('idle', "Mom Idle", 24, false);
@@ -185,7 +185,7 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 			case 'mom-car':
-				tex = Modding.getSparrow("momCar", ["week4"], Modding.findModOfName(PlayState.mod));
+				tex = Modding.sparrow("LIB_week4:momCar");
 				frames = tex;
 
 				animation.addByPrefix('idle', "Mom Idle", 24, false);
@@ -204,7 +204,7 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 			case 'monster':
-				tex = Modding.getSparrow("Monster_Assets", ["week2"], Modding.findModOfName(PlayState.mod));
+				tex = Modding.sparrow("LIB_week2:Monster_Assets");
 				frames = tex;
 				animation.addByPrefix('idle', 'monster idle', 24, false);
 				animation.addByPrefix('singUP', 'monster up note', 24, false);
@@ -219,7 +219,7 @@ class Character extends FlxSprite
 				addOffset("singDOWN", -30, -40);
 				playAnim('idle');
 			case 'monster-christmas':
-				tex = Modding.getSparrow("christmas/monsterChristmas", ["week5"], Modding.findModOfName(PlayState.mod));
+				tex = Modding.sparrow("LIB_week5:christmas/monsterChristmas");
 				frames = tex;
 				animation.addByPrefix('idle', 'monster idle', 24, false);
 				animation.addByPrefix('singUP', 'monster up note', 24, false);
@@ -234,7 +234,7 @@ class Character extends FlxSprite
 				addOffset("singDOWN", -40, -94);
 				playAnim('idle');
 			case 'pico':
-				tex = Modding.getSparrow("Pico_FNF_assetss", ["week3"], Modding.findModOfName(PlayState.mod));
+				tex = Modding.sparrow("LIB_week3:Pico_FNF_assetss");
 				frames = tex;
 				animation.addByPrefix('idle', "Pico Idle Dance", 24);
 				animation.addByPrefix('singUP', 'pico Up note0', 24, false);
@@ -273,7 +273,7 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'bf':
-				var tex = Modding.getSparrow("BOYFRIEND", null, Modding.findModOfName(PlayState.mod));
+				var tex = Modding.sparrow("shared:BOYFRIEND");
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -312,7 +312,7 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'bf-christmas':
-				var tex = Modding.getSparrow("christmas/bfChristmas", ["week5"], Modding.findModOfName(PlayState.mod));
+				var tex = Modding.sparrow("LIB_week5:christmas/bfChristmas");
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -340,7 +340,7 @@ class Character extends FlxSprite
 
 				flipX = true;
 			case 'bf-car':
-				var tex = Modding.getSparrow("bfCar", ["week4"], Modding.findModOfName(PlayState.mod));
+				var tex = Modding.sparrow("LIB_week4:bfCar");
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -365,7 +365,7 @@ class Character extends FlxSprite
 
 				flipX = true;
 			case 'bf-pixel':
-				frames = Modding.getSparrow("weeb/bfPixel", ["week6"], Modding.findModOfName(PlayState.mod));
+				frames = Modding.sparrow("LIB_week6:weeb/bfPixel");
 				animation.addByPrefix('idle', 'BF IDLE', 24, false);
 				animation.addByPrefix('singUP', 'BF UP NOTE', 24, false);
 				animation.addByPrefix('singLEFT', 'BF LEFT NOTE', 24, false);
@@ -398,7 +398,7 @@ class Character extends FlxSprite
 
 				flipX = true;
 			case 'bf-pixel-dead':
-				frames = Modding.getSparrow("weeb/bfPixelsDEAD", ["week6"], Modding.findModOfName(PlayState.mod));
+				frames = Modding.sparrow("LIB_week6:weeb/bfPixelsDEAD");
 				animation.addByPrefix('singUP', "BF Dies pixel", 24, false);
 				animation.addByPrefix('firstDeath', "BF Dies pixel", 24, false);
 				animation.addByPrefix('deathLoop', "Retry Loop", 24, true);
@@ -416,7 +416,7 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'senpai':
-				frames = Modding.getSparrow("weeb/senpai", ["week6"], Modding.findModOfName(PlayState.mod));
+				frames = Modding.sparrow("LIB_week6:weeb/senpai");
 				animation.addByPrefix('idle', 'Senpai Idle', 24, false);
 				animation.addByPrefix('singUP', 'SENPAI UP NOTE', 24, false);
 				animation.addByPrefix('singLEFT', 'SENPAI LEFT NOTE', 24, false);
@@ -436,7 +436,7 @@ class Character extends FlxSprite
 
 				antialiasing = false;
 			case 'senpai-angry':
-				frames = Modding.getSparrow("weeb/senpai", ["week6"], Modding.findModOfName(PlayState.mod));
+				frames = Modding.sparrow("LIB_week6:weeb/senpai");
 				animation.addByPrefix('idle', 'Angry Senpai Idle', 24, false);
 				animation.addByPrefix('singUP', 'Angry Senpai UP NOTE', 24, false);
 				animation.addByPrefix('singLEFT', 'Angry Senpai LEFT NOTE', 24, false);
@@ -456,7 +456,7 @@ class Character extends FlxSprite
 				antialiasing = false;
 
 			case 'spirit':
-				frames = Modding.getPacker("weeb/spirit", ["week6"], Modding.findModOfName(PlayState.mod));
+				frames = Modding.packer("LIB_week6:weeb/spirit");
 				animation.addByPrefix('idle', "idle spirit_", 24, false);
 				animation.addByPrefix('singUP', "up_", 24, false);
 				animation.addByPrefix('singRIGHT', "right_", 24, false);
@@ -477,7 +477,7 @@ class Character extends FlxSprite
 				antialiasing = false;
 
 			case 'parents-christmas':
-				frames = Modding.getSparrow("christmas/mom_dad_christmas_assets", ["week5"], Modding.findModOfName(PlayState.mod));
+				frames = Modding.sparrow("LIB_week5:christmas/mom_dad_christmas_assets");
 				animation.addByPrefix('idle', 'Parent Christmas Idle', 24, false);
 				animation.addByPrefix('singUP', 'Parent Up Note Dad', 24, false);
 				animation.addByPrefix('singDOWN', 'Parent Down Note Dad', 24, false);
@@ -504,7 +504,7 @@ class Character extends FlxSprite
 			default:
 				// custom character alert
 				var curchar:CusChar = Modding.api.getCharShit(character);
-				frames = Modding.getSparrow(curchar.graphic, null, Modding.findModOfName(PlayState.mod));
+				frames = Modding.sparrow(curchar.graphic);
 				for (anim in curchar.animations)
 				{
 					animation.addByPrefix(anim.name, anim.anim, 24, false);

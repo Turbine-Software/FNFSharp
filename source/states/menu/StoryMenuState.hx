@@ -86,6 +86,18 @@ class StoryMenuState extends MusicBeatState
 	{
 		weekModded = new Map<String, String>();
 
+		for (week in 0...weekNames.length)
+		{
+			if (weekNames[week] == "Daddy Dearest" || weekNames[week] == "")
+			{
+				weekModded.set(weekNames[week], "shared");
+			}
+			else
+			{
+				weekModded.set(weekNames[week], "LIB_week" + (week));
+			}
+		}
+
 		if (engine.functions.Option.recieveValue("GRAPHICS_globalAA") == 0)
 			{
 				FlxG.camera.antialiasing = true;
@@ -177,12 +189,12 @@ class StoryMenuState extends MusicBeatState
 		{
 			for (weeks in Modding.weeks)
 			{
-				if (weeks.mod == mod.name)
+				if (weeks.mod == mod.name && weeks.weeks.length != 0)
 				{
 					for (week in weeks.weeks)
 					{
 						trace("week: " + week.name + " of mod: " + mod.name);
-						var weekThing:MenuItem = new MenuItem(0, yellowBG.y + yellowBG.height + 10, 0, mod.path + "/images/" + week.graphic + ".png");
+						var weekThing:MenuItem = new MenuItem(0, yellowBG.y + yellowBG.height + 10, 0, mod.path + "/images/" + week.graphic.split(":")[1] + ".png");
 						weekThing.y += ((weekThing.height + 20) * index);
 						weekThing.targetY = index;
 						grpWeekText.add(weekThing);
@@ -195,7 +207,7 @@ class StoryMenuState extends MusicBeatState
 						weekCharacters.push(["dad", "bf", "gf"]);
 						weekUnlocked.push(true);
 						weekNames.push('[MOD] ' + week.name);
-						weekModded.set(week.name, mod.name);
+						weekModded.set('[MOD] ' + week.name, mod.meta.modID);
 						index++;
 					}
 				}
@@ -387,7 +399,8 @@ class StoryMenuState extends MusicBeatState
 			PlayState.storyDifficulty = curDifficulty;
 
 			PlayState.mod = weekModded[weekNames[curWeek]];
-			PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase(), weekModded[weekNames[curWeek]] != null ? Modding.findModOfName(weekModded[weekNames[curWeek]]) : null);
+			trace(PlayState.mod);
+			PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase(), weekModded[weekNames[curWeek]]);
 			PlayState.storyWeek = curWeek;
 			PlayState.campaignScore = 0;
 			PlayState.startFrom = 0;

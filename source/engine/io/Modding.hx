@@ -8,6 +8,8 @@ import openfl.media.Sound;
 import sys.FileSystem;
 import engine.base.ModAPI;
 
+using StringTools;
+
 /**
  * Contains helper functions for modding. Also contains a global wrapper of the `ModAPI` class.
  */
@@ -37,209 +39,192 @@ class Modding
         #end
     }
 
-    /**
-     * Finds a mod by its name. Returns null if not found.
-     * @param name the name of the mod
-     * @return engine.base.ModAPI.Mod
-     */
-    public static function findModOfName(name:String):engine.base.ModAPI.Mod
+    static function split(key:String):Array<String>
     {
-        #if !NO_MODDING
-        trace("Looking for mod of name: " + name);
-        for (mod in api.loaded)
+        if (key.indexOf(":") == -1)
         {
-            if (mod.name == name)
-            {
-                trace("Found mod: " + mod.name);
-                return mod;
-            }
+            return [];
         }
-        #else
-        trace("Modding is disabled.");
-        #end
-        return null;
+
+        return key.split(":");
     }
 
-    /**
-     * Seeks for an asset.
-     * 
-     * Looks through normal assets first, then through the mods.
-     * 
-     * Doesn't obey the `libInclude` week attribute.
-     * @param key the song to look for
-     * @param mod the specific mod to look in, if null the first occurance is returned
-     * @return the asset, null if not found
-     */
-    public static function getInst(key:String, ?mod:Mod):Sound
+    public static function image(key:String):BitmapData
     {
-        trace("./assets/songs/" + key.toLowerCase() + "/Inst." + Paths.SOUND_EXT + "=>" + FileSystem.exists("./assets/songs/" + key.toLowerCase() + "/Inst." + Paths.SOUND_EXT));
-        if (FileSystem.exists("./assets/songs/" + key.toLowerCase() + "/Inst." + Paths.SOUND_EXT))
-        {
-            trace("Found file in normal assets: " + key.toLowerCase());
-            return Sound.fromFile("./assets/songs/" + key.toLowerCase() + "/Inst." + Paths.SOUND_EXT);
-        }
         #if !NO_MODDING
+        var modID = split(key)[0];
+        var imageID = split(key)[1] == null ? "" : split(key)[1];
+
+        if (modID == "" || modID == "shared")
+        {
+            return BitmapData.fromFile("./assets/shared/images/" + imageID + ".png");
+        }
+        else if (modID == "preload")
+        {
+            return BitmapData.fromFile("./assets/images/" + imageID + ".png");
+        }
+        else if (modID.startsWith("LIB_"))
+        {
+            var lib = modID.split("_")[1];
+            return BitmapData.fromFile("./assets/" + lib + "/images/" + imageID + ".png");
+        }
         else
         {
-            trace("Looking for file in mods: " + key);
-            return api.getSoundShit("/songs/" + key + "/Inst." + Paths.SOUND_EXT, mod);
+            return api.image(imageID, modID);
         }
         #else
-        trace("Modding is disabled.");
         return null;
         #end
     }
 
-    /**
-     * Seeks for an asset.
-     * 
-     * Looks through normal assets first, then through the mods.
-     * 
-     * Doesn't obey the `libInclude` week attribute.
-     * @param key the song to look for
-     * @param mod the specific mod to look in, if null the first occurance is returned
-     * @return the asset, null if not found
-     */
-    public static function getVoices(key:String, ?mod:Mod):Sound
+    public static function inst(key:String):Sound
     {
-        trace("./assets/songs/" + key.toLowerCase() + "/Voices." + Paths.SOUND_EXT + "=>" + FileSystem.exists("./assets/songs/" + key.toLowerCase() + "/Voices." + Paths.SOUND_EXT));
-        if (FileSystem.exists("./assets/songs/" + key.toLowerCase() + "/Voices." + Paths.SOUND_EXT))
-        {
-            trace("Found file in normal assets: " + key.toLowerCase());
-            return Sound.fromFile("./assets/songs/" + key.toLowerCase() + "/Voices." + Paths.SOUND_EXT);
-        }
         #if !NO_MODDING
+        var modID = split(key)[0].trim();
+        var instID = split(key)[1] == null ? "" : split(key)[1].trim();
+
+        if (modID == "" || modID == "shared" || modID == "preload" || modID.startsWith("LIB_"))
+        {
+            trace("./assets/songs/" + instID.toLowerCase() + "/Inst.ogg");
+            return Sound.fromFile("./assets/songs/" + instID.toLowerCase() + "/Inst.ogg");
+        }
         else
         {
-            trace("Looking for file in mods: " + key);
-            return api.getSoundShit("/songs/" + key + "/Voices." + Paths.SOUND_EXT, mod);
+            trace("MOD SONG!!!! " + modID);
+            return api.inst(instID, modID);
         }
         #else
-        trace("Modding is disabled.");
         return null;
         #end
     }
 
-    /**
-     * Seeks for an asset.
-     * 
-     * Looks through normal assets first, then through the mods.
-     * 
-     * Obeys the `libInclude` week attribute.
-     * @param key 
-     * @param mod 
-     * @return FlxAtlasFrames
-     */
-    public static function getSparrow(key:String, ?seekIn:Array<String>, ?mod:Mod):FlxAtlasFrames
+    public static function voices(key:String):Sound
     {
-        trace("GETTING SPARROW: " + key);
-
-        if (FileSystem.exists("./assets/images/" + key + ".png"))
-        {
-            trace("Found file in preload: " + key);
-            return Paths.getSparrowAtlas(key, 'preload');
-        }
-
-        if (FileSystem.exists("./assets/shared/images/" + key + ".png"))
-        {
-            trace("Found file in shared: " + key);
-            return Paths.getSparrowAtlas(key, 'shared');
-        }
-        
-        if (seekIn != null)
-        {
-            for (included in seekIn)
-            {
-                trace("Seeking forced lib: " + included);
-                if (FileSystem.exists("./assets/" + included + "/images/" + key + ".png"))
-                {
-                    trace("Found file in forced lib: " + included);
-                    return FlxAtlasFrames.fromSparrow(BitmapData.fromFile("./assets/" + included + "/images/" + key + ".png"), File.getContent("./assets/" + included + "/images/" + key + ".xml"));
-                }
-            }
-        }
         #if !NO_MODDING
-        for (weeksT in weeks)
+        var modID = split(key)[0];
+        var instID = split(key)[1] == null ? "" : split(key)[1];
+
+        if (modID == "" || modID == "shared" || modID == "preload" || modID.startsWith("LIB_"))
         {
-            for (week in weeksT.weeks)
-            {
-                for (included in week.libInclude)
-                {
-                    trace("Seeking included lib: " + included);
-                    if (FileSystem.exists("./assets/" + included + "/images/" + key + ".png"))
-                    {
-                        trace("Found file in included lib: " + included);
-                        return FlxAtlasFrames.fromSparrow(BitmapData.fromFile("./assets/" + included + "/images/" + key + ".png"), File.getContent("./assets/" + included + "/images/" + key + ".xml"));
-                    }
-                }
-            }
+            return Sound.fromFile("./assets/songs/" + instID.toLowerCase() + "/Voices.ogg");
         }
-        trace("Couldn't find file in included assets: " + key);
-        return api.getSparrowShit("/images/" + key + ".png", "/images/" + key + ".xml", mod);
+        else
+        {
+            return api.voices(instID, modID);
+        }
         #else
-        trace("Modding is disabled.");
         return null;
         #end
     }
 
-    /**
-     * Seeks for an asset.
-     * 
-     * Looks through normal assets first, then through the mods.
-     * 
-     * Obeys the `libInclude` week attribute.
-     * @param key 
-     * @param mod 
-     * @return FlxAtlasFrames
-     */
-     public static function getPacker(key:String, ?seekIn:Array<String>, ?mod:Mod):FlxAtlasFrames
+    public static function json(key:String):String
     {
-        trace("GETTING PACKER: " + key);
-
-        if (FileSystem.exists("./assets/images/" + key + ".png"))
-        {
-            trace("Found file in preload: " + key);
-            return Paths.getPackerAtlas(key, 'preload');
-        }
-
-        if (FileSystem.exists("./assets/shared/images/" + key + ".png"))
-        {
-            trace("Found file in shared: " + key);
-            return Paths.getPackerAtlas(key, 'shared');
-        }
-
-        if (seekIn != null)
-        {
-            for (included in seekIn)
-            {
-                trace("Seeking forced lib: " + included);
-                if (FileSystem.exists("./assets/" + included + "/images/" + key + ".png"))
-                {
-                    trace("Found file in forced lib: " + included);
-                    return FlxAtlasFrames.fromSpriteSheetPacker(BitmapData.fromFile("./assets/" + included + "/images/" + key + ".png"), File.getContent("./assets/" + included + "/images/" + key + ".txt"));
-                }
-            }
-        }
         #if !NO_MODDING
-        for (weeksT in weeks)
+        var modID = split(key)[0];
+        var jsonID = split(key)[1] == null ? "" : split(key)[1];
+
+        if (modID == "" || modID == "shared")
         {
-            for (week in weeksT.weeks)
-            {
-                for (included in week.libInclude)
-                {
-                    trace("Seeking included lib: " + included);
-                    if (FileSystem.exists("./assets/" + included + "/images/" + key + ".png"))
-                    {
-                        trace("Found file in included lib: " + included);
-                        return FlxAtlasFrames.fromSpriteSheetPacker(BitmapData.fromFile("./assets/" + included + "/images/" + key + ".png"), File.getContent("./assets/" + included + "/images/" + key + ".txt"));
-                    }
-                }
-            }
+            return File.getContent("./assets/shared/data/" + jsonID + ".json");
         }
-        trace("Couldn't find file in included assets: " + key);
-        return api.getPackerShit("/images/" + key + ".png", "/images/" + key + ".xml", mod);
+        else if (modID == "preload")
+        {
+            return File.getContent("./assets/data/" + jsonID + ".json");
+        }
+        else if (modID.startsWith("LIB_"))
+        {
+            var lib = modID.split("_")[1];
+            return File.getContent("./assets/" + lib + "/data/" + jsonID + ".json");
+        }
+        else
+        {
+            return api.json(jsonID, modID);
+        }
         #else
-        trace("Modding is disabled.");
+        return "";
+        #end
+    }
+
+    public static function txt(key:String):String
+    {
+        #if !NO_MODDING
+        var modID = split(key)[0];
+        var txtID = split(key)[1] == null ? "" : split(key)[1];
+
+        if (modID == "" || modID == "shared")
+        {
+            return File.getContent("./assets/shared/data/" + txtID + ".txt");
+        }
+        else if (modID == "preload")
+        {
+            return File.getContent("./assets/data/" + txtID + ".txt");
+        }
+        else if (modID.startsWith("LIB_"))
+        {
+            var lib = modID.split("_")[1];
+            return File.getContent("./assets/" + lib + "/data/" + txtID + ".txt");
+        }
+        else
+        {
+            return api.txt(txtID, modID);
+        }
+        #else
+        return "";
+        #end
+    }
+
+    public static function sparrow(key:String):FlxAtlasFrames
+    {
+        #if !NO_MODDING
+        var modID = split(key)[0];
+        var txtID = split(key)[1] == null ? "" : split(key)[1];
+
+        if (modID == "" || modID == "shared")
+        {
+            return Paths.getSparrowAtlas(txtID, "shared");
+        }
+        else if (modID == "preload")
+        {
+            return Paths.getSparrowAtlas(txtID, "preload");
+        }
+        else if (modID.startsWith("LIB_"))
+        {
+            var lib = modID.split("_")[1];
+            return Paths.getSparrowAtlas(txtID, lib);
+        }
+        else
+        {
+            return api.sparrow(txtID, modID);
+        }
+        #else
+        return null;
+        #end
+    }
+
+    public static function packer(key:String):FlxAtlasFrames
+    {
+        #if !NO_MODDING
+        var modID = split(key)[0];
+        var txtID = split(key)[1] == null ? "" : split(key)[1];
+
+        if (modID == "" || modID == "shared")
+        {
+            return Paths.getPackerAtlas(txtID, "shared");
+        }
+        else if (modID == "preload")
+        {
+            return Paths.getPackerAtlas(txtID, "preload");
+        }
+        else if (modID.startsWith("LIB_"))
+        {
+            var lib = modID.split("_")[1];
+            return Paths.getPackerAtlas(txtID, lib);
+        }
+        else
+        {
+            return api.packer(txtID, modID);
+        }
+        #else
         return null;
         #end
     }

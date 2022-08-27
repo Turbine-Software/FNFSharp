@@ -83,8 +83,11 @@ class FreeplayState extends MusicBeatState
 			var split = txtFile.split("\n");
 			for (line in split)
 			{
-				modSongs.set(line.split(":")[0], mod.name);
-				songs.push(new SongMetadata(line.split(":")[0], 0, line.split(":")[1], Std.parseInt(line.split(":")[2])));
+				if (line != "")
+				{
+					songs.push(new SongMetadata(line.split(":")[0], 0, line.split(":")[1], Std.parseInt(line.split(":")[2])));
+					modSongs.set(line.split(":")[0], mod.meta.modID);
+				}
 			}
 		}
 		#end
@@ -262,7 +265,7 @@ class FreeplayState extends MusicBeatState
 
 			trace(poop);
 
-			PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase(), modSongs[poop] != null ? Modding.findModOfName(modSongs[poop]) : null);
+			PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase(), modSongs[poop]);
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = curDifficulty;
 
@@ -316,23 +319,6 @@ class FreeplayState extends MusicBeatState
 		// lerpScore = 0;
 		#end
 
-		#if PRELOAD_ALL
-		Conductor.changeBPM(songs[curSelected].bpm);
-
-		// new
-		FlxG.sound.playMusic(Modding.getInst(songs[curSelected].songName, Modding.findModOfName(modSongs[songs[curSelected].songName])), 0);
-
-		/* old
-		if (FileSystem.exists(Paths.inst(songs[curSelected].songName)) || modSongs[songs[curSelected].songName] == null)
-			FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
-		else
-		{
-			trace("cursong " + songs[curSelected].songName);
-			FlxG.sound.playMusic(Modding.api.getSoundShit("/songs/" + songs[curSelected].songName + "/Inst." + Paths.SOUND_EXT, modSongs[songs[curSelected].songName] != null ? Modding.findModOfName(modSongs[songs[curSelected].songName]) : null), 0);
-		}
-		*/
-		#end
-
 		var bullShit:Int = 0;
 
 		for (i in 0...iconArray.length)
@@ -367,7 +353,7 @@ class FreeplayState extends MusicBeatState
 		#if !NO_MODDING
 		for (mod in Modding.api.loaded)
 		{
-			var shit:CharJSON = Json.parse(Modding.api.getTextShit("/chars.json", mod));
+			var shit:CharJSON = Json.parse(Modding.api.json("chars", mod.meta.modID));
 			for (char in shit.chars)
 			{
 				colorShit.push(char.name + ":" + char.color);
@@ -392,14 +378,6 @@ class FreeplayState extends MusicBeatState
 	}
 
 	public override function beatHit() {
-		camera.zoom += 0.01;
-		if (curBeat % 8 == 0)
-		{
-			camera.zoom += 0.05;
-			bg.alpha = 1;
-		}
-
-
 		super.beatHit();
 	}
 }

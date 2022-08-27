@@ -41,7 +41,7 @@ class Song
 		this.bpm = bpm;
 	}
 
-	public static function loadFromJson(jsonInput:String, ?folder:String, fromMod:Mod):SwagSong
+	public static function loadFromJson(jsonInput:String, ?folder:String, fromModID:String):SwagSong
 	{
 		var rawJson = "";
 
@@ -51,7 +51,8 @@ class Song
 		}
 		else
 		{
-			rawJson = Modding.api.getTextShit('/charts/' + folder.toLowerCase() + "/" + jsonInput.toLowerCase() + ".json", fromMod);
+			trace(fromModID);
+			rawJson = Modding.api.json('charts/' + folder.toLowerCase() + "/" + jsonInput.toLowerCase(), fromModID);
 		}	
 
 		while (!rawJson.endsWith("}"))

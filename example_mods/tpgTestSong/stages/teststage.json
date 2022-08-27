@@ -1,0 +1,78 @@
+{
+    "dadXPos": 0,
+    "dadYPos": 0,
+    "bfXPos": 0,
+    "bfYPos": 0,
+    "gfXPos": 0,
+    "gfYPos": 0,
+
+    "staticSprites":
+    [
+        {
+            "public": true,
+            "id": "bg",
+            "x": -600,
+            "y": -200,
+            "width": 0,
+            "height": 0,
+            "scrollFactorX": 0.9,
+            "scrollFactorY": 0.9,
+            "image": "basegame:stageback"
+        },
+        {
+            "public": true,
+            "id": "stageFront",
+            "x": -650,
+            "y": -600,
+            "width": 0,
+            "height": 0,
+            "scrollFactorX": 0.9,
+            "scrollFactorY": 0.9,
+            "image": "basegame:stagefront"
+        },
+        {
+            "public": true,
+            "id": "stageCurtains",
+            "x": -600,
+            "y": -200,
+            "width": 0,
+            "height": 0,
+            "scrollFactorX": 1.3,
+            "scrollFactorY": 1.3,
+            "image": "basegame:stagecurtains"
+        }
+    ],
+
+    "animatedSprites":
+    [
+        {
+            "public": true,
+            "id": "test",
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "scrollFactorX": 1,
+            "scrollFactorY": 1,
+            "image": "tpgTestSong:test",
+            "prefixAnimations":
+            [
+                {
+                    "id": "test",
+                    "prefix": "test",
+                    "framerate": 24,
+                    "looped": true
+                }
+            ],
+            "frameAnimations":
+            [
+                {
+                    "id": "test2",
+                    "frames": [0, 1, 2, 3, 4],
+                    "framerate": 24,
+                    "looped": true
+                }
+            ]
+        }
+    ]
+}

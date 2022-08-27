@@ -39,7 +39,7 @@ class HealthIcon extends FlxSprite
 		if (!animation.exists(char))
 		{
 			// custom character
-			loadGraphic(Modding.api.getImageShit("/images/" + char + "-icon.png", Modding.findModOfName(PlayState.mod)), true, 150, 150);
+			loadGraphic(Modding.api.image(char + "-icon.png", PlayState.mod), true, 150, 150);
 			animation.add(char, [0, 1], 0, false, isPlayer);
 		}
 		animation.play(char);
