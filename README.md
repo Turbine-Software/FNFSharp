@@ -10,6 +10,8 @@ No, I won't change it.
 
 [DISCORD SERVER](https://discord.gg/x6pvf3WPyW)
 
+[GUILDED](https://www.guilded.gg/i/E9meGAJE)
+
 ## The actually important shits
 
 ### What's FNF♯?
