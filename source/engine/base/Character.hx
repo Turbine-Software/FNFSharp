@@ -37,7 +37,7 @@ class Character extends FlxSprite
 		switch (curCharacter)
 		{
 			case 'taco': // very important character
-				tex = Modding.getSparrow("taco", null, Modding.findModOfName(PlayState.mod));
+				tex = Modding.sparrow("shared:taco");
 				frames = tex;
 				animation.addByPrefix('idle', 'Idle', 24);
 				animation.addByPrefix('singUP', 'Up', 24);
