@@ -36,9 +36,9 @@ IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMPILED VERSION, YOU MUST OPEN 
 
 - [thepercentageguy](https://twitter.com/PercentageGuy) - Main Developer
 
-- [SpunBlue](https://twitter.com/SpunBlue) - Windows builds
-
 - [Trigger](https://www.instagram.com/trigger_drawings/) - Logo
+
+- [KhamDaMan](https://twitter.com/khamdaman) - "Week T" sprite for example mod
 
 This engine was made with love to the original game and it's devs.
 
