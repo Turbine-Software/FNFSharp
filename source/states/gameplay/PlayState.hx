@@ -192,6 +192,8 @@ class PlayState extends MusicBeatState
 
 	public var publicStageObjs:FlxTypedGroup<FlxSprite>;
 
+	var preloadSong = true;
+
 	override public function create()
 	{
 		if (FlxG.sound.music != null)
@@ -943,6 +945,9 @@ class PlayState extends MusicBeatState
 
 	function schoolIntro(?dialogueBox:DialogueBox):Void
 	{
+		// dialogue sucks :(
+		preloadSong = false;
+
 		var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
 		black.scrollFactor.set();
 		add(black);
@@ -1145,7 +1150,13 @@ class PlayState extends MusicBeatState
 
 		if (!paused)
 		{
-			FlxG.sound.music.play(true, startFrom);
+			// aaaaaa
+			if (preloadSong)
+				FlxG.sound.music.play(true, startFrom);
+			else
+			{
+				FlxG.sound.playMusic(Modding.inst(mod + ":" + SONG.song));
+			}
 
 			/*
 			if (FileSystem.exists(Paths.inst(PlayState.SONG.song)))
