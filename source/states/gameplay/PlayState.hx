@@ -1,5 +1,7 @@
 package states.gameplay;
 
+import sys.thread.Thread;
+import shaders.CRT;
 import engine.assets.OverlayShader;
 import shaders.ColorInvert.ColorInvertShader;
 import openfl.display.ShaderParameter;
@@ -206,12 +208,18 @@ class PlayState extends MusicBeatState
 
 		FlxCamera.defaultCameras = [camGame];
 
-		if (Option.recieveValue("FUN_cameraShader") == 1)
+		switch (cast(Option.recieveValue("FUN_cameraShader"), Int))
 		{
-			var shader:ColorInvertShader = new ColorInvertShader();
-			var filter = new ShaderFilter(shader);
-			camHUD.setFilters([filter]);
-			camGame.setFilters([filter]);
+			case 1: // color invert
+				var shader:ColorInvertShader = new ColorInvertShader();
+				var filter = new ShaderFilter(shader);
+				camHUD.setFilters([filter]);
+				camGame.setFilters([filter]);
+			case 2: // CRT shader
+				var crtEffect:CRT = new CRT();
+				var filter = new ShaderFilter(crtEffect.shader);
+				camHUD.setFilters([filter]);
+				camGame.setFilters([filter]);
 		}
 
 		persistentUpdate = true;
@@ -1181,7 +1189,8 @@ class PlayState extends MusicBeatState
 		curSong = songData.song;
 
 		// preloading :OOO
-		FlxG.sound.music.loadEmbedded(Modding.inst(mod + ":" + SONG.song));
+		FlxG.sound.music.loadEmbedded(Modding.inst(mod + ":" + SONG.song), true, false);
+		trace("The dingus actually got here.");
 
 		if (SONG.needsVoices)
 		{

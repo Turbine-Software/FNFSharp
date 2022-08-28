@@ -79,7 +79,7 @@ class OptionsMenu extends MusicBeatState
 			new OptionGroup("Fun", [
 				new CycleOption("Instadeath %v", "For those who want an actual challenge", ["Off", "On"], "FUN_instadeath"),
 				new CycleOption("Arrow Shader %v", "Change shader used on HUD", ["Off", "Wave"], "FUN_hudShader"),
-				new CycleOption("Camera Shader %v", "Change shader used on camera", ["Off", "Invert"], "FUN_cameraShader"),
+				new CycleOption("Camera Shader %v", "Change shader used on camera", ["Off", "Invert", "CRT"], "FUN_cameraShader"),
 			]),
 			new OptionGroup("Misc", [
 				new FunctionOption("Reset Option", "Resets all options to their default values.", clearOptions),
