@@ -58,7 +58,6 @@ class ModAPI
                     Application.current.window.alert("Mod " + file + " has version index " + meta.versionIndex + " but this version of FNF# uses version index " + modVerIndex + ".\n\nThe mod will still run, but some features may not work as expected, or even crash the game. Run at your own risk.", "DEPRECATED MOD");
                 }
                 loaded.push({
-                    name: file.split("SM.")[1],
                     meta: meta,
                     path: modFolderPath + file
                 });
@@ -100,9 +99,9 @@ class ModAPI
         for (mod in loaded)
         {
             var rawJson = File.getContent(mod.path + "/weeks.json");
-            trace("Parsing weeks.json for mod: " + mod.name);
+            trace("Parsing weeks.json for mod: " + mod.meta.modID);
             var week:Weeks = Json.parse(rawJson);
-            week.mod = mod.name;
+            week.mod = mod.meta.modID;
             weeks.push(week);
         }
         return weeks;
@@ -247,7 +246,7 @@ class ModAPI
         var char:CusChar = null;
         for (mod in loaded)
         {
-            var rawJson = File.getContent(mod.path + "chars.json");
+            var rawJson = File.getContent(mod.path + "/chars.json");
             trace("Parsing chars.json for mod: " + mod.meta.modID);
             var thing:CharJSON = Json.parse(rawJson);
             for (charT in thing.chars)
@@ -270,7 +269,6 @@ class ModAPI
 
 typedef Mod = 
 {
-    name:String,
     meta:ModMeta,
     path:String,
 }

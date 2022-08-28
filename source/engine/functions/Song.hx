@@ -51,7 +51,7 @@ class Song
 		}
 		else
 		{
-			trace(fromModID);
+			trace("Mod ID:" + fromModID);
 			rawJson = Modding.api.json('charts/' + folder.toLowerCase() + "/" + jsonInput.toLowerCase(), fromModID);
 		}	
 

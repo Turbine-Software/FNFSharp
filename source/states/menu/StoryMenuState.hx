@@ -189,11 +189,11 @@ class StoryMenuState extends MusicBeatState
 		{
 			for (weeks in Modding.weeks)
 			{
-				if (weeks.mod == mod.name && weeks.weeks.length != 0)
+				if (weeks.mod == mod.meta.modID && weeks.weeks.length != 0)
 				{
 					for (week in weeks.weeks)
 					{
-						trace("week: " + week.name + " of mod: " + mod.name);
+						trace("week: " + week.name + " of mod: " + mod.meta.modID);
 						var weekThing:MenuItem = new MenuItem(0, yellowBG.y + yellowBG.height + 10, 0, mod.path + "/images/" + week.graphic.split(":")[1] + ".png");
 						weekThing.y += ((weekThing.height + 20) * index);
 						weekThing.targetY = index;

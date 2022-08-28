@@ -86,10 +86,15 @@ class FreeplayState extends MusicBeatState
 				if (line != "")
 				{
 					songs.push(new SongMetadata(line.split(":")[0], 0, line.split(":")[1], Std.parseInt(line.split(":")[2])));
-					modSongs.set(line.split(":")[0], mod.meta.modID);
+					modSongs.set(line.split(":")[0].trim().toLowerCase(), mod.meta.modID);
+					modSongs.set(line.split(":")[0].trim().toLowerCase() + "-easy", mod.meta.modID);
+					modSongs.set(line.split(":")[0].trim().toLowerCase() + "-hard", mod.meta.modID);
 				}
 			}
 		}
+
+		trace(modSongs);
+
 		#end
 
 		/* 
@@ -265,6 +270,7 @@ class FreeplayState extends MusicBeatState
 
 			trace(poop);
 
+			PlayState.mod = modSongs[poop];
 			PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase(), modSongs[poop]);
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = curDifficulty;
