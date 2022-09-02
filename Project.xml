@@ -101,6 +101,8 @@
 	<assets path='example_mods' rename='mods' embed='false' unless="NO_MODDING"/>
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />
 
+	<!-- windows only rn lolol -->
+	<assets path='crash-dialog' rename='crash-dialog' embed='false' if="windows"/>
 
 	<!-- <template path='mods' /> -->
 	

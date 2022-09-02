@@ -1,5 +1,6 @@
 package;
 
+import sys.io.Process;
 import haxe.Exception;
 import sys.io.File;
 import sys.FileSystem;
@@ -29,7 +30,25 @@ class Main extends Sprite
 
 	public static function main():Void
 	{
-		Lib.current.addChild(new Main());
+		try {
+			Lib.current.addChild(new Main());
+		}
+		catch (e:Exception)
+		{
+			var fileStr:String = "";
+			
+			fileStr += "CRASH REASON:" + e.message + "\n\n";
+			
+			fileStr += e.stack.toString();
+			
+			File.saveContent("./CRASHDUMP.txt", fileStr);
+			#if windows
+			var process = new Process('start .\\crash-dialog\\Main.exe ".\\CRASHDUMP.txt"');
+			#else
+			Application.current.window.alert("FNF# Crashed!\nCRASH REASON:" + e.message + "\nMORE INFO IN CRASHDUMP.TXT!", "FNF# Crashed!");
+			#end
+			Sys.exit(1);
+		}
 	}
 
 	public function new()

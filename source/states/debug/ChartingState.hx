@@ -271,7 +271,7 @@ class ChartingState extends MusicBeatState
 		chars = CoolUtil.coolTextFile(Paths.txt('characterList'));
 		for (mod in Modding.api.loaded)
 		{
-			var shit:CharJSON = Json.parse(Modding.api.txt("/chars.json", mod.meta.modID));
+			var shit:CharJSON = Json.parse(Modding.api.json("chars", mod.meta.modID));
 			for (char in shit.chars)
 			{
 				chars.push(char.name);
